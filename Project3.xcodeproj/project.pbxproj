@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CEF9E7D7282323490093F23E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEF9E7D6282323490093F23E /* main.cpp */; };
+		CEF9E7F528239EBA0093F23E /* memorymanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEF9E7F428239EBA0093F23E /* memorymanager.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +26,12 @@
 /* Begin PBXFileReference section */
 		CEF9E7D3282323490093F23E /* Project3 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Project3; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF9E7D6282323490093F23E /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		CEF9E7DD2823240E0093F23E /* studentinfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = studentinfo.h; sourceTree = SOURCE_ROOT; };
+		CEF9E7DE282324420093F23E /* dllist.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dllist.h; sourceTree = SOURCE_ROOT; };
+		CEF9E7F228239E820093F23E /* debugmem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = debugmem.h; sourceTree = SOURCE_ROOT; };
+		CEF9E7F328239EA00093F23E /* memorymanager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = memorymanager.h; sourceTree = SOURCE_ROOT; };
+		CEF9E7F428239EBA0093F23E /* memorymanager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = memorymanager.cpp; sourceTree = SOURCE_ROOT; };
+		CEF9E7F628239EDE0093F23E /* linkedlisttests_s22.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = linkedlisttests_s22.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +64,12 @@
 		CEF9E7D5282323490093F23E /* Project3 */ = {
 			isa = PBXGroup;
 			children = (
+				CEF9E7F628239EDE0093F23E /* linkedlisttests_s22.h */,
+				CEF9E7F428239EBA0093F23E /* memorymanager.cpp */,
+				CEF9E7F328239EA00093F23E /* memorymanager.h */,
+				CEF9E7F228239E820093F23E /* debugmem.h */,
+				CEF9E7DE282324420093F23E /* dllist.h */,
+				CEF9E7DD2823240E0093F23E /* studentinfo.h */,
 				CEF9E7D6282323490093F23E /* main.cpp */,
 			);
 			path = Project3;
@@ -119,6 +132,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEF9E7F528239EBA0093F23E /* memorymanager.cpp in Sources */,
 				CEF9E7D7282323490093F23E /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

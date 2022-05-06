@@ -1,12 +1,10 @@
-//
-//  studentinfo.h
-//  Project3
-//
-//  Created by Ludwig von Schönfeldt  on 04.05.22.
-//
+#ifndef STUDENTINFO_H
+#define STUDENTINFO_H
+#include<string>
 
-#ifndef studentinfo_h
-#define studentinfo_h
+namespace StudentInfo {
+    std::string name() { return "Ludwig von Schoenfeldt"; } //Add your name, no special characters
+    std::string id() { return "1871721"; } //Add your id, no special characters
+};
 
-
-#endif /* studentinfo_h */
+#endif

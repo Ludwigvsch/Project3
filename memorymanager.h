@@ -1,12 +1,17 @@
-//
-//  memorymanager.h
-//  Project3
-//
-//  Created by Ludwig von Schönfeldt  on 04.05.22.
-//
+#ifndef D_MEMORYMANAGER_H
+#define D_MEMORYMANAGER_H
 
-#ifndef memorymanager_h
-#define memorymanager_h
+#include <cstddef>
 
+void memoryReport();
+void reset();
+int getNumAlloc();
 
-#endif /* memorymanager_h */
+void* alloc(std::size_t sz, char const* file, char const*  func, int line);
+
+void* operator new(std::size_t sz, char const* file, char const*  func, int line);
+void* operator new[](std::size_t sz, char const* file, char const*  func, int line);
+
+void operator delete(void* ptr) noexcept;
+void operator delete[](void* ptr) noexcept;
+#endif
