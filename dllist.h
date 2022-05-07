@@ -92,80 +92,172 @@ DLList<Item>::DLList() :head(nullptr), tail(nullptr), size(0) {
 
 
 /* Copy constructor
-
+Copy constructor for the linked list. This should create an entirely new linked list 
+with the same number of Nodes and the Items stored these Nodes in the same order as 
+seen the other list’s Nodes. This should not result in any memory leaks or aliasing.
 */
 template<typename Item>
 DLList<Item>::DLList(const DLList<Item>& other) {
-    
+    head = nullptr;
+    tail = nullptr;
+    size = 0;
+    Node* curr = other.head;
+    while (curr != nullptr)
+    {
+        push_rear(curr->item);
+        curr = curr->next;
+    }
 }
+
+
 /* Overloaded assignment operator
+Overloaded assignment operator for the linked list. Causes the already existing 
+linked list to be identical to the other linked list without causing any memory leaks or aliasing.
 */
 template<typename Item>
 DLList<Item>& DLList<Item>::operator=(const DLList<Item>& other) {
-
-    /*  TODO  */
-
+    if (this != &other)
+    {
+        while (head != nullptr)
+        {
+            pop_front();
+        }
+        Node* curr = other.head;
+        while (curr != nullptr)
+        {
+            push_rear(curr->item);
+            curr = curr->next;
+        }
+    }
     return *this;
 }
+    
 
 /* DLList destructor
+The list dynamically allocates nodes, that means when we 
+destruct your list we need to ensure we deallocated the nodes appropriately to avoid memory leaks.
 */
 template<typename Item>
 DLList<Item>::~DLList() {
-
-    /*  TODO  */
-
+    while (head != nullptr) {
+        pop_front();
+    }
 }
 
 /* DLList print
+Traverses the list and prints the items in the list in a single line with 
+spaces in between each item. There are no spaces before the first word and 
+after the last word. There is no newline after all items have been printed. 
+For example suppose our list contains the strings “Cash”, “Shell”, and “Ruby”, 
+print will display in the console:
+Cash Shell Ruby
 */
 template<typename Item>
 void DLList<Item>::print() const {
-
-    /*  TODO  */
-
+    if (empty()) return;
+    Node * curr = head;
+    if (curr->next == nullptr) std::cout << curr->item;
+    else {
+        while (curr->next != nullptr) 
+        {
+            std::cout<<curr->item << " ";
+            curr = curr->next;
+        }
+        std::cout << curr->item;
+    }
 }
 
 /* DLList empty
+returns boolean value indicating if the list is empty or not.
 */
 template<typename Item>
 bool DLList<Item>::empty() const {
-
-    /*  TODO  */
-
-    bool dummyReturnValue = false;
-    return dummyReturnValue;
+    return size == 0;
 }
+
 
 
 /* DLList push_front
+Adds item to a new Node at the Front of the list. Updates head, 
+tail, and size accordingly. Must appropriately handle cases in 
+which the list is empty and if there are nodes already in the list.
 */
 template<typename Item>
 void DLList<Item>::push_front(const Item &item) {
-
-    /*  TODO  */
-
+   Node* temp = new Node(item, nullptr, nullptr);
+    if (head == nullptr) 
+    {
+        head = temp;
+        tail = temp;
+    }
+    else 
+    {
+        temp->next = head;
+        head->prev = temp;
+        head = temp;
+    }
+    size++;
 }
 
-/* DLList push_rear
-*/
-template<typename Item>
-void DLList<Item>::push_rear(const Item &item) {
-
-    /*  TODO  */
-
+    /* DLList push_rear
+    Adds item to a new Node at the Rear of the list.
+    Updates head, tail, and size accordingly. Must
+    appropriately handle cases in which the list is empty and if there are nodes already in the list.
+    */
+    template <typename Item>
+    void DLList<Item>::push_rear(const Item &item)
+    {
+        Node* temp = new Node(item, nullptr, nullptr);
+    if (head == nullptr) 
+    {
+        head = temp;
+        tail = temp;
+    }
+    else 
+    {
+        tail->next = temp;
+        temp->prev = tail;
+        tail = temp;
+    }
+    size++;
 }
 
 /* DLList push_at
+Given an index, this function adds the item to a new Node at the index. 
+Updates head, tail, and size accordingly. If the index is less than or 
+equal to zero add the item to the front. If the index is greater than or
+ equal to the size of the list, then add it to the rear. Otherwise add 
+ the item at the index indicated. Indices begin at zero.
 */
 template<typename Item>
 void DLList<Item>::push_at(int idx, const Item &item) {
-
-    /*  TODO  */
-
+    if (idx <= 0)
+    {
+        push_front(item);
+    }
+    else if (idx >= size)
+    {
+        push_rear(item);
+    }
+    else
+    {
+        Node* temp = new Node(item, nullptr, nullptr);
+        Node* curr = head;
+        for (int i = 0; i < idx; i++)
+        {
+            curr = curr->next;
+        }
+        temp->next = curr;
+        temp->prev = curr->prev;
+        curr->prev->next = temp;
+        curr->prev = temp;
+        size++;
+    }
 }
 
 /*  DLList front
+returns the item in the Node at the front of the list without modifying the list. 
+The function cannot be called if the list is empty.
 */
 template<typename Item>
 Item DLList<Item>::front() const {
@@ -174,16 +266,12 @@ Item DLList<Item>::front() const {
     // you know that you messed up with your usage, this function
     // is never called on an empty list.
     assert(head != nullptr);
-    
-    
-    /*  TODO  */
-
-    Item dummyReturnValue;
-    return dummyReturnValue;
-
+    return head->item;
 }
 
 /* DLList rear
+returns the item in the Node at the rear of the list without modifying the list. 
+The function cannot be called if the list is empty.
 */
 template<typename Item>
 Item DLList<Item>::rear() const {
@@ -192,15 +280,11 @@ Item DLList<Item>::rear() const {
     // you know that you messed up with your usage, this function
     // is never called on an empty list.
     assert(tail != nullptr);
-
-    /*  TODO  */
-
-    Item dummyReturnValue;
-    return dummyReturnValue;
-    
+    return tail->item;  
 }
 
 /* DLList at
+returns the item in the Node in the index place of the list. Indices begin at zero.
 */
 template<typename Item>
 Item DLList<Item>::at(int idx) const {
@@ -208,167 +292,176 @@ Item DLList<Item>::at(int idx) const {
     // Assert that index is correct before getting the Item
     assert(idx >= 0 && idx < size);
 
-    /*  TODO  */
-
-    Item dummyReturnValue;
-    return dummyReturnValue;
+    Node* curr = head;
+    for (int i = 0; i < idx; i++)
+    {
+        curr = curr->next;
+    }
+    return curr->item;
 }
 
+
 /* DLList count
+returns the number of nodes currently in the list.
 */
 template<typename Item>
 int DLList<Item>::count() const {
 
-    /*  TODO  */
-
-    int dummyReturnValue = 9000;
-    return dummyReturnValue;
+   return size;
 }
 
 /* DLList find
+Searches the list to see if the item is currently in the list. 
+If it is, the function returns the index of the item, otherwise 
+it returns -1. Indices begin at zero.
 */
 template<typename Item>
 int DLList<Item>::find(const Item &item) const {
 
-    /*  TODO  */
-
-    int dummyReturnValue = 8675309;
-    return dummyReturnValue;
+    Node* curr = head;
+    for (int i = 0; i < size; i++)
+    {
+        if (curr->item == item)
+        {
+            return i;
+        }
+        curr = curr->next;
+    }
+    return -1;
 }
 
+
 /* DLList pop_front
+Removes the first item in the list, returns true if the item was deleted, 
+false otherwise. Updates head, tail, and size accordingly. 
+Must appropriately manage cases where the list is empty or has one or more items.
 */
 template<typename Item>
 bool DLList<Item>::pop_front() {
 
-    /*  TODO  */
-
-    bool dummyReturnValue = false;
-    return dummyReturnValue;
+    if (head == nullptr)
+    {
+        return false;
+    }
+    else if (head == tail)
+    {
+        delete head;
+        head = nullptr;
+        tail = nullptr;
+        size--;
+        return true;
+    }
+    else
+    {
+        Node* temp = head;
+        head = head->next;
+        head->prev = nullptr;
+        delete temp;
+        size--;
+        return true;
+    }
 }
+
+
 /* DLList pop_rear
+Removes the last item in the list, returns true if the item was deleted, 
+false otherwise. Updates head, tail, and size accordingly. 
+Must appropriately manage cases where the list is empty or has one item, 
+or has two or more items.
 */
 template<typename Item>
 bool DLList<Item>::pop_rear() {
 
-    /*  TODO  */
-
-    bool dummyReturnValue = false;
-    return dummyReturnValue;
+    if (head == nullptr)
+    {
+        return false;
+    }
+    else if (head == tail)
+    {
+        delete head;
+        head = nullptr;
+        tail = nullptr;
+        size--;
+        return true;
+    }
+    else
+    {
+        Node* temp = tail;
+        tail = tail->prev;
+        tail->next = nullptr;
+        delete temp;
+        size--;
+        return true;
+    }
 }
 
 /* DLList pop_at on index
+Removes the item at the index of the list, 
+returns true if the item was deleted false otherwise. 
+Updates head, tail, and size accordingly. If the 
+indices are out of bound pop_at does nothing and 
+returns false. Indices begin at zero.
 */
 template<typename Item>
 bool DLList<Item>::pop_at(int idx) {
 
-    /*  TODO  */
-
-    bool dummyReturnValue = false;
-    return dummyReturnValue;
-
+    if (idx < 0 || idx >= size)
+    {
+        return false;
+    }
+    else if (idx == 0)
+    {
+        return pop_front();
+    }
+    else if (idx == size - 1)
+    {
+        return pop_rear();
+    }
+    else
+    {
+        Node* curr = head;
+        for (int i = 0; i < idx; i++)
+        {
+            curr = curr->next;
+        }
+        curr->prev->next = curr->next;
+        curr->next->prev = curr->prev;
+        delete curr;
+        size--;
+        return true;
+    }
 }
 
+
 /* DLList pop_item on item
+Removes the first occurrence of the item relative to the front 
+of the list, returns the index of the removed item. If the list 
+is empty return -2. Return -1 if the item is not found. Indices begin at zero.
 */
 template<typename Item>
 int DLList<Item>::pop_item(const Item &item) {
 
-    /*  TODO  */
-    int dummyReturnValue = 42;
-    return dummyReturnValue;
+    if (head == nullptr)
+    {
+        return -2;
+    }
+    else
+    {
+        Node* curr = head;
+        for (int i = 0; i < size; i++)
+        {
+            if (curr->item == item)
+            {
+                pop_at(i);
+                return i;
+            }
+            curr = curr->next;
+        }
+        return -1;
+    }
 }
+
 
 #endif
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// _X_XMXXII
